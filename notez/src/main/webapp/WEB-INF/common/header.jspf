@@ -1,0 +1,29 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Notez</title>
+        <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+              rel="stylesheet">
+
+        <style>
+            .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 60px;
+                background-color: #f5f5f5;
+            }
+            .navbar{
+                display: flex;
+                flex-flow: row nowrap ;       
+            }
+            .navbar-nav{
+                display: flex;
+                flex-flow: row nowrap ;
+                gap: 16px;
+            }
+        </style>
+    </head>
+
+    <body>
