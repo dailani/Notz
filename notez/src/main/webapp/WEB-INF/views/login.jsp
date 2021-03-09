@@ -22,16 +22,17 @@
 
 </nav>
 
-        <div class="container">
-            <form action="/notez-Alpha/login.do" method="post">
-                <p>
-                    <font color="red">${errorMessage}</font>
-                </p>
-                Name: <input type="text" name="name" /> Password:<input
-                    type="password" name="password" /> <input type="submit"
-                    value="Login" />
-            </form>
+<div class="input-group mb-3" id='divLogin'>
+    <form class="form-signin" action="/notez-Alpha/login.do" method="post">
+        <p>
+            <font color="red">${errorMessage}</font>
+        </p>
+        <h3> Login </h3>
+        <input class="form-control" placeholder="Username" type="text" name="name" /> 
+        <input class="form-control" placeholder="Password"  type="password" name="password" /> 
+        <input class="btn btn-primary" type="submit" value="Login" />
+    </form>
 
-        </div>
+</div>
 
- <%@ include file="../common/footer.jspf"%>
+<%@ include file="../common/footer.jspf"%>

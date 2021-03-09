@@ -21,7 +21,14 @@
             .navbar-nav{
                 display: flex;
                 flex-flow: row nowrap ;
-                gap: 16px;
+            }
+            #divLogin{
+                width: 400px;
+                height: 200px;
+                position: absolute;
+                top: 35%;
+                left: 40%;
+                margin: 0 auto;
             }
         </style>
     </head>
