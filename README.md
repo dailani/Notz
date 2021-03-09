@@ -14,8 +14,8 @@ This section should list any major frameworks that you built your project using.
 * JavaEE
 * JSP
 * HTML/CSS
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* Bootstrap
+* JQuery
 * Maven
 
 
