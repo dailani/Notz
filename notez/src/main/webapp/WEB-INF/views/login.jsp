@@ -23,6 +23,7 @@
 </nav>
 
 <div class="input-group mb-3" id='divLogin'>
+    <img src="login.png" style="width:50px;height:50px;" alt="LoginIcon"/>
     <form class="form-signin" action="/notez-Alpha/login.do" method="post">
         <p>
             <font color="red">${errorMessage}</font>

@@ -5,6 +5,8 @@
  */
 package com.notez.login;
 
+import com.notez.controller.NotesDB;
+import com.notez.logout.LogoutServlet;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.notez.todo.TodoService;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  // Method descriptor #15 ()V
@@ -26,30 +31,37 @@ import com.notez.todo.TodoService;
 @WebServlet(urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet {
 
-	private LoginService userValidationService = new LoginService();
-	private TodoService todoService = new TodoService();
+    private LoginService userValidationService = new LoginService();
+    private TodoService todoService = new TodoService();
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
-				request, response);
-	}
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
+                request, response);
+    }
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
 
-		boolean isUserValid = userValidationService.isUserValid(name, password);
+        boolean isUserValid = userValidationService.isUserValid(name, password);
 
-		if (isUserValid) {
-			request.getSession().setAttribute("name", name);
-			response.sendRedirect("/notez-Alpha/list-todos.do");
-		} else {
-			request.setAttribute("errorMessage", "Invalid Credentials!");
-			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
-					request, response);
-		}
-	}
+        if (isUserValid) {
+            request.getSession().setAttribute("name", name);
+            response.sendRedirect("/notez-Alpha/list-todos.do");
+            try {
+                NotesDB.viewTable(NotesDB.loadConn());
+            } catch (SQLException ex) {
+                Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            request.setAttribute("errorMessage", "Invalid Credentials!");
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
+                    request, response);
+        }
+    }
 
 }

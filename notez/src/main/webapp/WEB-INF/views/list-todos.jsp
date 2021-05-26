@@ -21,10 +21,10 @@
 		<tbody>
 			<c:forEach items="${todos}" var="todo">
 				<tr>
-					<td>${todo.name}</td>
+					<td>${todo.desc}</td>
 					<td>${todo.category}</td>
 					<td>&nbsp;&nbsp;<a class="btn btn-danger"
-						href="/notez-Alpha/delete-todo.do?todo=${todo.name}&category=${todo.category}">Delete</a></td>
+						href="/notez-Alpha/delete-todo.do?todo=${todo.desc}&category=${todo.category}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -9,6 +9,7 @@ package com.notez.todo;
  *
  * @author Dailan´s PC
  */
+import com.notez.controller.Notes;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class DeleteTodoServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		todoService.deleteTodo(new Todo(request.getParameter("todo"), request
+		todoService.deleteNotes(new Notes(request.getParameter("todo"), request
 				.getParameter("category")));
 		response.sendRedirect("/notez-Alpha/list-todos.do");
 	}

@@ -9,6 +9,7 @@ package com.notez.todo;
  *
  * @author Dailan´s PC
  */
+import com.notez.controller.Notes;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -39,9 +40,9 @@ public class AddTodoServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String newTodo = request.getParameter("todo");
+		String desc = request.getParameter("todo");
 		String category = request.getParameter("category");
-		todoService.addTodo(new Todo(newTodo, category));
+		todoService.addNotes(new Notes(desc, category));
 		response.sendRedirect("/notez-Alpha/list-todos.do");
 	}
 }

@@ -9,27 +9,32 @@ package com.notez.todo;
  *
  * @author Dailan´s PC
  */
-import java.util.ArrayList;
+import com.notez.controller.Notes;
+import com.notez.controller.NotesDB;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class TodoService {
-	private static List<Todo> todos = new ArrayList<Todo>();
-	static {
-		todos.add(new Todo("Learn Web Application Development", "Study"));
-		todos.add(new Todo("Learn Spring MVC", "Study"));
-		todos.add(new Todo("Learn Spring Rest Services", "Study"));
-	}
 
-	public List<Todo> retrieveTodos() {
-		return todos;
-	}
+    private Connection conn = NotesDB.loadConn();
+    private List<Notes> listnotes;
 
-	public void addTodo(Todo todo) {
-		todos.add(todo);
-	}
+    public List<Notes> retrieveNotes() {
+        try {
+            listnotes = NotesDB.viewTable(NotesDB.loadConn());
+        } catch (SQLException ex) {
+        }
 
-	public void deleteTodo(Todo todo) {
-		todos.remove(todo);
-	}
+        return listnotes;
+    }
+
+    public void addNotes(Notes notes) {
+        listnotes.add(notes);
+    }
+
+    public void deleteNotes(Notes notes) {
+        listnotes.remove(notes);
+    }
 
 }

@@ -9,7 +9,11 @@ package com.notez.logout;
  *
  * @author Dailan´s PC
  */
+import com.notez.controller.NotesDB;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,5 +28,12 @@ public class LogoutServlet extends HttpServlet {
 		request.getSession().invalidate();
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
 				request, response);
+            try {
+                NotesDB.viewTable(NotesDB.loadConn());
+            } catch (SQLException ex) {
+                Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 }
