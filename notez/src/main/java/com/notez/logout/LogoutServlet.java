@@ -29,7 +29,7 @@ public class LogoutServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
 				request, response);
             try {
-                NotesDB.viewTable(NotesDB.loadConn());
+                NotesDB.viewTable();
             } catch (SQLException ex) {
                 Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NullPointerException ex) {

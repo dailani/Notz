@@ -6,6 +6,7 @@
 package com.notez.login;
 
 import com.notez.controller.NotesDB;
+import com.notez.controller.UsersDB;
 import com.notez.logout.LogoutServlet;
 import java.io.IOException;
 
@@ -31,7 +32,7 @@ import java.util.logging.Logger;
 @WebServlet(urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet {
 
-    private LoginService userValidationService = new LoginService();
+    private UsersDB userValidationService = new UsersDB();
     private TodoService todoService = new TodoService();
 
     protected void doGet(HttpServletRequest request,
@@ -45,18 +46,11 @@ public class LoginServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
 
-        boolean isUserValid = userValidationService.isUserValid(name, password);
+        boolean isUserValid = userValidationService.isValid(name, password);
 
         if (isUserValid) {
             request.getSession().setAttribute("name", name);
             response.sendRedirect("/notez-Alpha/list-todos.do");
-            try {
-                NotesDB.viewTable(NotesDB.loadConn());
-            } catch (SQLException ex) {
-                Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
-                Logger.getLogger(LogoutServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
         } else {
             request.setAttribute("errorMessage", "Invalid Credentials!");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(

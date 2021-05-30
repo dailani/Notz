@@ -5,6 +5,7 @@
  */
 package com.notez.controller;
 
+import static com.notez.controller.NotesDB.loadConn;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,20 +14,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Dailan´s PC
  */
-public class NotesDB {
+public class UsersDB {
 
-    /*
-    Useful Links:
-    1.  https://softwareengineering.stackexchange.com/questions/339598/how-to-write-a-proper-class-to-connect-to-database-in-java
-    2.--- SQL-Queryes-Connections---- https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-statements.html
-     */
     public static Connection loadConn() {
 
         String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11414620";
@@ -48,11 +42,11 @@ public class NotesDB {
 
     }
 
-    public static List<Notes> viewTable() throws SQLException {
-        String query = "select * from notes";
+    public static List<User> viewUsers() throws SQLException {
+        String query = "select * from users";
         Statement stmt = null;
         ResultSet rs = null;
-        List<Notes> listnotes = new ArrayList();
+        List<User> listusers = new ArrayList();
         Connection conn = loadConn();
 
         try {
@@ -60,9 +54,10 @@ public class NotesDB {
             rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                String desc = rs.getString("desc");
-                String category = rs.getString("category");
-                listnotes.add(new Notes(desc, category));
+                int idusers = rs.getInt("idusers");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                listusers.add(new User(idusers, username, password));
 
             }
             System.out.println("finished!");
@@ -95,41 +90,69 @@ public class NotesDB {
 
         }
 
-        return listnotes;
+        return listusers;
     }
 
-    public static void addNote(Notes note) {
+    public static void addUser(User user) {
 
         String query = null;
         PreparedStatement stmt = null;
         Connection conn = loadConn();
 
         try {
-            stmt = conn.prepareStatement("INSERT INTO notes(`desc`,category) VALUES(?,?)");
-            stmt.setString(1, note.getDesc());
-            stmt.setString(2, note.getCategory());
+            stmt = conn.prepareStatement("INSERT INTO users(`username`,`password`) VALUES(?,?)");
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("SQL addNote Exception! " + e.getMessage());
+            System.out.println("SQL addUser Exception! " + e.getMessage());
+
         }
 
     }
 
-    public static void deleteNote(Notes note) {
-
-        PreparedStatement stmt = null;
+    public static boolean isValid(String username, String password) {
+        Statement stmt = null;
         Connection conn = loadConn();
-        String query = "DELETE FROM notes "
-                + "WHERE `desc`=? ";;
+        String query = "SELECT * from users WHERE username = " + "'"+username+"'" + " AND `password`= " + "'"+password+"'";
         try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String sqlname = rs.getString("username");
+                String sqlpass = rs.getString("password");
 
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1, note.getDesc());
-            stmt.executeUpdate();
+                if (username.equals(sqlname) && password.equals(sqlpass)) {
+                    return true;
+                }
+            }
         } catch (SQLException e) {
-            System.out.println("SQL deleteNote Exception! " + e.getMessage());
+            System.out.println(e.getMessage());
         }
 
+        return false;
+    }
+    
+    public static boolean isUsernameTaken(String username, String password) {
+        Statement stmt = null;
+        Connection conn = loadConn();
+        String query = "SELECT * from users WHERE username = " + "'"+username+"'" + " AND `password`= " + "'"+password+"'";
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String sqlname = rs.getString("username");
+                String sqlpass = rs.getString("password");
+
+                if (username.equals(sqlname)) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
     }
 }

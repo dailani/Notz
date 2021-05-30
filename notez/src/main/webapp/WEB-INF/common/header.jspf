@@ -30,7 +30,13 @@
                 left: 40%;
                 margin: 0 auto;
             }
+            .card {
+                margin: 0 auto; /* Added */
+                float: none; /* Added */
+                margin-bottom: 10px; 
+                margin-top: 80px;/* Added */
+            }
         </style>
     </head>
 
-    <body>
+    <body class="text-center">

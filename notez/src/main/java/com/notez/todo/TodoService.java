@@ -22,7 +22,7 @@ public class TodoService {
 
     public List<Notes> retrieveNotes() {
         try {
-            listnotes = NotesDB.viewTable(NotesDB.loadConn());
+            listnotes = NotesDB.viewTable();
         } catch (SQLException ex) {
         }
 
@@ -30,11 +30,12 @@ public class TodoService {
     }
 
     public void addNotes(Notes notes) {
-        listnotes.add(notes);
+        NotesDB.addNote(notes);
+        
     }
 
     public void deleteNotes(Notes notes) {
-        listnotes.remove(notes);
+        NotesDB.deleteNote(notes);
     }
 
 }

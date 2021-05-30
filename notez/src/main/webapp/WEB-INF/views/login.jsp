@@ -22,18 +22,27 @@
 
 </nav>
 
-<div class="input-group mb-3" id='divLogin'>
-    <img src="login.png" style="width:50px;height:50px;" alt="LoginIcon"/>
-    <form class="form-signin" action="/notez-Alpha/login.do" method="post">
-        <p>
-            <font color="red">${errorMessage}</font>
-        </p>
-        <h3> Login </h3>
-        <input class="form-control" placeholder="Username" type="text" name="name" /> 
-        <input class="form-control" placeholder="Password"  type="password" name="password" /> 
-        <input class="btn btn-primary" type="submit" value="Login" />
-    </form>
 
+
+
+<div class="card-holder mx-auto" style="width: 500px;" >
+    <div class="card">
+        <form class="form-signin" action="/notez-Alpha/login.do" method="post">
+            <%-- <img class="mb-4" src="INSERT URL" alt="" width="72" height="72"> --%>
+            <div class="card-body">
+                <h3 class="h1 mb-3 font-weight-bold">Login</h3>
+                <input class="form-control" placeholder="Username" type="text" name="name" /> 
+                <input class="form-control" placeholder="Password"  type="password" name="password" /> 
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <p>
+                    <font color="red">${errorMessage}</font>
+                </p>
+                <h6 class="h6 mb-3 font-weight-light">Don't have an account? <a href="/notez-Alpha/signup"> Sign Up</a></h6>
+                <h6 class="h6 mb-3 font-weight-light"> <a href="#"> Forgot your password?</a></h6>
+            </div>
+        </form>
+    </div>
 </div>
+
 
 <%@ include file="../common/footer.jspf"%>

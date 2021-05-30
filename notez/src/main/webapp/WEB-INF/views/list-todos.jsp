@@ -34,6 +34,7 @@
 		<font color="red">${errorMessage}</font>
 	</p>
 	<a class="btn btn-success" href="/notez-Alpha/add-todo.do">Add New Todo</a>
+        
 </div>
 
 <%@ include file="../common/footer.jspf"%>
