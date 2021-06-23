@@ -21,74 +21,40 @@ import java.util.List;
  */
 public class UsersDB {
 
-    public static Connection loadConn() {
-
-        String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11414620";
-        String user = "sql11414620";
-        String password = "j8bUakZHk8";
-
-        try {
-            Connection conn = DriverManager.getConnection(url, user, password);
-            return conn;
-            // Do something with the Connection
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-
-        return null;
-
-    }
+    private static String username = NotesDB.user;
 
     public static List<User> viewUsers() throws SQLException {
-        String query = "select * from users";
-        Statement stmt = null;
-        ResultSet rs = null;
-        List<User> listusers = new ArrayList();
-        Connection conn = loadConn();
+        String query = "SELECT * FROM sql11420068.users;";
 
+
+        
+        List<User> listusers = new ArrayList();
+        Connection conn = NotesDB.loadConn();
+
+        
         try {
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+              
 
             while (rs.next()) {
-                int idusers = rs.getInt("idusers");
+                int idusers = rs.getInt("iduser");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 listusers.add(new User(idusers, username, password));
+
 
             }
             System.out.println("finished!");
 
         } catch (SQLException e) {
-        } finally {
-            // it is a good idea to release
-            // resources in a finally{} block
-            // in reverse-order of their creation
-            // if they are no-longer needed
 
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException sqlEx) {
-                } // ignore
+                 System.out.println("viewUsers Exception" + e.getMessage());
+          
+          
+        } 
 
-                rs = null;
-            }
-
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException sqlEx) {
-                } // ignore
-
-                stmt = null;
-
-            }
-
-        }
+       
 
         return listusers;
     }
@@ -113,9 +79,9 @@ public class UsersDB {
     }
 
     public static boolean isValid(String username, String password) {
-        Statement stmt = null;
+        Statement stmt;
         Connection conn = loadConn();
-        String query = "SELECT * from users WHERE username = " + "'"+username+"'" + " AND `password`= " + "'"+password+"'";
+        String query = "SELECT * from users WHERE username = " + "'" + username + "'" + " AND `password`= " + "'" + password + "'";
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -134,25 +100,81 @@ public class UsersDB {
         return false;
     }
     
+   public static boolean isAdmin(String username, String password) {
+       if(username.equals("admin") && password.equals("admin")){
+               return true;
+       }
+       return false;
+   } 
+
     public static boolean isUsernameTaken(String username, String password) {
-        Statement stmt = null;
         Connection conn = loadConn();
-        String query = "SELECT * from users WHERE username = " + "'"+username+"'" + " AND `password`= " + "'"+password+"'";
+        String query = "SELECT username from users WHERE username = " + "'" + username + "'" + " AND `password`= " + "'" + password + "'";
         try {
-            stmt = conn.createStatement();
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 String sqlname = rs.getString("username");
-                String sqlpass = rs.getString("password");
-
                 if (username.equals(sqlname)) {
                     return true;
                 }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
 
         return false;
     }
+
+    public static void createTableforUser(User user) {
+
+        Connection conn = loadConn();
+        String query = "CREATE TABLE `"+username+"`.`" + user.getUsername() + "`"
+                + " (\n"
+                + "  `idnotes` INT NOT NULL AUTO_INCREMENT,\n"
+                + "  `desc` VARCHAR(100) NULL,\n"
+                + "  `category` VARCHAR(45) NULL,\n"
+                + "  PRIMARY KEY (`idnotes`))";
+
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        }
+    }
+    
+     public static void deleteUser( User user) {
+
+        PreparedStatement stmt = null;
+        Connection conn = loadConn();
+        String query = "DELETE FROM users " 
+                + " WHERE `username`=? ";
+        try {
+
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getUsername());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL deleteUser Exception! " + e.getMessage());
+        }
+    }
+     
+    public static void deleteTable(User user){
+        try
+       {		      
+         Connection conn = loadConn();
+         Statement stmt = conn.createStatement();
+         
+         String sql = "DROP TABLE "+ user.getUsername();
+         stmt.executeUpdate(sql);
+         System.out.println("Table deleted in given database : " + user.getUsername());   	  
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } 
+    }
+  
 }

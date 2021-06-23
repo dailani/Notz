@@ -21,17 +21,13 @@ import java.util.logging.Logger;
  * @author Dailan´s PC
  */
 public class NotesDB {
+//--------------------Change your Database connections in here !!!!!----------------------------------------------------------------------------------------------- 
 
-    /*
-    Useful Links:
-    1.  https://softwareengineering.stackexchange.com/questions/339598/how-to-write-a-proper-class-to-connect-to-database-in-java
-    2.--- SQL-Queryes-Connections---- https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-statements.html
-     */
+    protected static String url = "jdbc:mysql://sql11.freemysqlhosting.net/sql11420068?";
+    protected static String user = "sql11420068";
+    protected static String password = "zbDk4tNEtc";
+
     public static Connection loadConn() {
-
-        String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11414620";
-        String user = "sql11414620";
-        String password = "j8bUakZHk8";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
@@ -48,8 +44,8 @@ public class NotesDB {
 
     }
 
-    public static List<Notes> viewTable() throws SQLException {
-        String query = "select * from notes";
+    public static List<Notes> viewTable(User user) throws SQLException {
+        String query = "select * from " + user.getUsername();
         Statement stmt = null;
         ResultSet rs = null;
         List<Notes> listnotes = new ArrayList();
@@ -98,14 +94,14 @@ public class NotesDB {
         return listnotes;
     }
 
-    public static void addNote(Notes note) {
+    public static void addNote(Notes note, User user) {
 
         String query = null;
         PreparedStatement stmt = null;
         Connection conn = loadConn();
 
         try {
-            stmt = conn.prepareStatement("INSERT INTO notes(`desc`,category) VALUES(?,?)");
+            stmt = conn.prepareStatement("INSERT INTO " + "`" + user.getUsername() + "`" + "(`desc`,category) VALUES(?,?)");
             stmt.setString(1, note.getDesc());
             stmt.setString(2, note.getCategory());
             stmt.executeUpdate();
@@ -116,12 +112,12 @@ public class NotesDB {
 
     }
 
-    public static void deleteNote(Notes note) {
+    public static void deleteNote(Notes note, User user) {
 
         PreparedStatement stmt = null;
         Connection conn = loadConn();
-        String query = "DELETE FROM notes "
-                + "WHERE `desc`=? ";;
+        String query = "DELETE FROM " + user.getUsername()
+                + " WHERE `desc`=? ";
         try {
 
             stmt = conn.prepareStatement(query);

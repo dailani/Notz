@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.login;
+package com.notez.authent;
 
 import com.notez.controller.NotesDB;
 import com.notez.controller.UsersDB;
@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.notez.todo.TodoService;
+import com.notez.todo.Service;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 /*
  // Method descriptor #15 ()V
@@ -32,8 +33,7 @@ import java.util.logging.Logger;
 @WebServlet(urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet {
 
-    private UsersDB userValidationService = new UsersDB();
-    private TodoService todoService = new TodoService();
+    private Service todoService = new Service();
 
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
@@ -45,17 +45,32 @@ public class LoginServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
+        HttpSession session = request.getSession();
+        session.setAttribute("name", name);
+        session.setAttribute("password", password);
 
-        boolean isUserValid = userValidationService.isValid(name, password);
-
-        if (isUserValid) {
-            request.getSession().setAttribute("name", name);
-            response.sendRedirect("/notez-Alpha/list-todos.do");
+        boolean isUserValid = UsersDB.isValid(name, password);
+        boolean isAdmin = UsersDB.isAdmin(name, password);
+        System.out.println("........"+name+" "+password+".................");
+        System.out.println("........"+name+" "+password+".................");
+        System.out.println("........"+name+" "+password+".................");
+        System.out.println("........"+name+" "+password+".................");System.out.println("........"+name+" "+password+".................");
+        System.out.println("........"+name+" "+password+".................");
+        
+        if (isAdmin) {
+            System.out.println("........"+name+" "+password+".................");
+            response.sendRedirect("/notez-Alpha/list-user.do");
         } else {
-            request.setAttribute("errorMessage", "Invalid Credentials!");
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
-                    request, response);
+            if (isUserValid) {
+                request.getSession().setAttribute("name", name);
+                response.sendRedirect("/notez-Alpha/list-todos.do");
+            } else {
+                request.setAttribute("errorMessage", "Invalid Credentials!");
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(
+                        request, response);
+            }
         }
+
     }
 
 }

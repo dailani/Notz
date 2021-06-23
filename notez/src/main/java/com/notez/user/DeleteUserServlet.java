@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.todo;
+package com.notez.user;
 
 /**
  *
@@ -11,6 +11,7 @@ package com.notez.todo;
  */
 import com.notez.controller.Notes;
 import com.notez.controller.User;
+import com.notez.todo.Service;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -20,10 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/delete-todo.do")
-public class DeleteTodoServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/delete-user.do")
+public class DeleteUserServlet extends HttpServlet {
 
-    private Service todoService = new Service();
+    private Service userService = new Service();
 
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
@@ -32,8 +33,7 @@ public class DeleteTodoServlet extends HttpServlet {
         String name = (String) session.getAttribute("name");
         String password = (String) session.getAttribute("password");
         
-        todoService.deleteNotes(new Notes(request.getParameter("todo"), request
-                .getParameter("category")), new User(name,password));
-        response.sendRedirect("/notez-Alpha/list-todos.do");
+        userService.deleteUsers(new User(request.getParameter("username")));
+        response.sendRedirect("/notez-Alpha/list-user.do");
     }
 }
