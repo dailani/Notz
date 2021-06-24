@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.logout;
+package com.notez.controller;
 
 /**
  *
  * @author Dailan´s PC
  */
-import com.notez.controller.NotesDB;
-import com.notez.controller.User;
+import com.notez.dbservice.NotesDB;
+import com.notez.modell.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;

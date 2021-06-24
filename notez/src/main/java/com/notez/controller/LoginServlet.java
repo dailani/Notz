@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.authent;
+package com.notez.controller;
 
-import com.notez.controller.NotesDB;
-import com.notez.controller.UsersDB;
-import com.notez.logout.LogoutServlet;
+import com.notez.dbservice.NotesDB;
+import com.notez.dbservice.UsersDB;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.notez.todo.Service;
+import com.notez.controller.Service;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.authent;
+package com.notez.controller;
 
-import com.notez.controller.User;
-import com.notez.controller.UsersDB;
+import com.notez.modell.User;
+import com.notez.dbservice.UsersDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;

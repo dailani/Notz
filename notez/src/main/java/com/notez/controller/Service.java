@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.todo;
+package com.notez.controller;
 
 /**
  *
  * @author Dailan´s PC
  */
-import com.notez.controller.Notes;
-import com.notez.controller.NotesDB;
-import com.notez.controller.User;
-import com.notez.controller.UsersDB;
+import com.notez.modell.Notes;
+import com.notez.dbservice.NotesDB;
+import com.notez.modell.User;
+import com.notez.dbservice.UsersDB;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;

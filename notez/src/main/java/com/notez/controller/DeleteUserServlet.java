@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.notez.user;
+package com.notez.controller;
 
 /**
  *
  * @author Dailan´s PC
  */
-import com.notez.controller.Notes;
-import com.notez.controller.User;
-import com.notez.todo.Service;
+import com.notez.modell.Notes;
+import com.notez.modell.User;
+import com.notez.controller.Service;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
