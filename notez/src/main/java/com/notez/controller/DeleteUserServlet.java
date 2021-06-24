@@ -11,7 +11,7 @@ package com.notez.controller;
  */
 import com.notez.modell.Notes;
 import com.notez.modell.User;
-import com.notez.controller.Service;
+import com.notez.dbservice.Service;
 import java.io.IOException;
 
 import javax.servlet.ServletException;

@@ -9,6 +9,7 @@ package com.notez.controller;
  *
  * @author Dailan´s PC
  */
+import com.notez.dbservice.Service;
 import com.notez.modell.User;
 import java.io.IOException;
 

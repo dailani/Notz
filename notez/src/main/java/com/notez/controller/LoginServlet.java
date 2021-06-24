@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.notez.controller.Service;
+import com.notez.dbservice.Service;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,11 +50,8 @@ public class LoginServlet extends HttpServlet {
 
         boolean isUserValid = UsersDB.isValid(name, password);
         boolean isAdmin = UsersDB.isAdmin(name, password);
-        System.out.println("........"+name+" "+password+".................");
-        System.out.println("........"+name+" "+password+".................");
-        System.out.println("........"+name+" "+password+".................");
-        System.out.println("........"+name+" "+password+".................");System.out.println("........"+name+" "+password+".................");
-        System.out.println("........"+name+" "+password+".................");
+       
+        
         
         if (isAdmin) {
             System.out.println("........"+name+" "+password+".................");
