@@ -1,7 +1,7 @@
 # Notz
 
 
-##How to deploy on your local
+## How to deploy on your local
  1. Open the project on your IDE as a maven project.
  2. Configure your Database Connection Credentials on `NotesDB` class on controller package.
  3. Click `Clean and Build`
